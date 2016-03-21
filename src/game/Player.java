@@ -17,7 +17,7 @@ public class Player implements KeyListener{
 		bluePortal = new Portal();
 		orangePortal = new Portal();
 		inventory = 0;
-		
+
 	}
 	
 	public int getDirection(){
@@ -51,15 +51,19 @@ public class Player implements KeyListener{
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_W:
 			direction = Direction.UP;
+			Game.move();
 			break;
 		case KeyEvent.VK_S:
 			direction = Direction.DOWN;
+			Game.move();
 			break;
 		case KeyEvent.VK_D:
 			direction = Direction.RIGHT;
+			Game.move();
 			break;
 		case KeyEvent.VK_A:
 			direction = Direction.LEFT;
+			Game.move();
 			break;
 		case KeyEvent.VK_B:
 			if(bluePortal.isActive()){

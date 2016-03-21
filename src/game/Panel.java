@@ -75,8 +75,12 @@ public class Panel extends JPanel{
 					g.setColor(Color.YELLOW);
 					g.fillOval(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
 					g.setColor(Color.BLACK);
-				}else if(playingField.getMap()[i][j].getType().equals(CellType.DOOR)){
+				}else if(playingField.getMap()[i][j].getType().equals(CellType.OPENED_DOOR)){
 					g.setColor(Color.WHITE);
+					g.fillRect(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
+					g.setColor(Color.BLACK);
+				}else if(playingField.getMap()[i][j].getType().equals(CellType.CLOSED_DOOR)){
+					g.setColor(Color.GRAY);
 					g.fillRect(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
 					g.setColor(Color.BLACK);
 				}else if(playingField.getMap()[i][j].getType().equals(CellType.PLATE)){

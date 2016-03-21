@@ -20,15 +20,10 @@ public class DoorManager {
 	}
 
 	public void openDoor(Position platePos) {
-		
-		System.out.println(doorSystem);
-		
-		Position doorPos = doorSystem.get(platePos);
-		
-		System.out.println(platePos.hashCode());
-		
-		Panel.getPlayingField().setMapCellType(doorSystem.get(platePos), CellType.PATH);
-		
+		if(doorSystem.get(platePos) == null) System.out.println(doorSystem);
+		System.out.println(platePos);
+		System.out.println(doorSystem.keySet());
+		Panel.getPlayingField().setMapCellType(doorSystem.get(platePos), CellType.OPENED_DOOR);
 	}
 
 	

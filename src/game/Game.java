@@ -1,11 +1,10 @@
 package game;
 
-
 public class Game implements Runnable{
+	private static final int tickTime = 400;
 	
 	private Thread thread;
-	private Panel game;
-	private Position nextPosition;
+	private static Panel game;
 	private static Player player;
 	static boolean running = true;
 	
@@ -13,7 +12,6 @@ public class Game implements Runnable{
 		player = new Player(new Position(1,1));
 		game = new Panel();
 		thread = new Thread(this);
-		nextPosition = new Position();
 		thread.start();
 	}
 	
@@ -23,19 +21,24 @@ public class Game implements Runnable{
 
 	@Override
 	public void run() {
-		while(running){
-			delay(70);
-			move();
+		while(running) {
+			long now = 0;
+			long start = System.currentTimeMillis(); 
+			
+			while(now < start+tickTime){
+			    now = System.currentTimeMillis();
+			}
+	
 			checkAbbys();
 			checkZPM();
 			checkPlate();
 			checkPortal();
 			game.repaint();
 		}
-		
 	}
 	
-	private void move(){
+	public static void move(){
+		Position nextPosition = null;
 		if(player.getDirection() == Direction.UP){
 			nextPosition = new Position(player.getPosition().getX(),player.getPosition().getY()-1);
 			

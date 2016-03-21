@@ -30,7 +30,8 @@ public class Map {
 	}
 	
 	public void setMapCellType(Position p, CellType c){
-		map[p.getX()][p.getY()].setType(c);
+		if(p==null) System.out.println("no such cell"+c);
+		else map[p.getX()][p.getY()].setType(c);
 	}
 	
 	public DoorManager getDoorManager(){
@@ -149,7 +150,7 @@ public class Map {
 			   !plate.equals(door)){
 				
 				map[r1][r2].setType(CellType.PLATE);
-				map[r3][r4].setType(CellType.DOOR);
+				map[r3][r4].setType(CellType.CLOSED_DOOR);
 				
 				System.out.println(door.hashCode());
 				

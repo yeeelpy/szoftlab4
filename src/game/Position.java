@@ -29,20 +29,32 @@ public class Position {
 	
 	@Override
 	public String toString() {
-		return "(" + getX() + "," + getY() + ")";
+		return ""+hashCode();
+		//return "(" + getX() + "," + getY() + ")";
 	}
 	
-	public boolean equals(Position pos) {
-		if(this.getX() == pos.getX() && this.getY() == pos.getY()){
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}else{
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		Position pos = (Position) obj;
+		if (getX() != pos.getX())
+			return false;
+		if (getY() != pos.getY())
+			return false;
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		
-		return (this.x * 0x1f1f1f1f) ^ this.y + 1;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
 	}
 }
