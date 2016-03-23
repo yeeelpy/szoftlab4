@@ -75,11 +75,7 @@ public class Panel extends JPanel{
 					g.setColor(Color.YELLOW);
 					g.fillOval(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
 					g.setColor(Color.BLACK);
-				}else if(playingField.getMap()[i][j].getType().equals(CellType.OPENED_DOOR)){
-					g.setColor(Color.WHITE);
-					g.fillRect(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
-					g.setColor(Color.BLACK);
-				}else if(playingField.getMap()[i][j].getType().equals(CellType.CLOSED_DOOR)){
+				}else if(playingField.getMap()[i][j].getType().equals(CellType.DOOR)){
 					g.setColor(Color.GRAY);
 					g.fillRect(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
 					g.setColor(Color.BLACK);
@@ -94,6 +90,14 @@ public class Panel extends JPanel{
 				}else if(playingField.getMap()[i][j].getType().equals(CellType.ORANGEPORTAL)){
 					g.setColor(Color.ORANGE);
 					g.fillRect(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
+					g.setColor(Color.BLACK);
+				}else if(playingField.getMap()[i][j].getType().equals(CellType.BOX)){
+					g.setColor(Color.PINK);
+					g.fillRect(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
+					g.setColor(Color.BLACK);
+				}else if(playingField.getMap()[i][j].getType().equals(CellType.PRESSUREDPLATE)){
+					g.setColor(Color.PINK);
+					g.fillOval(i*CELLSIZE, j*CELLSIZE, CELLSIZE, CELLSIZE);
 					g.setColor(Color.BLACK);
 				}
 			}

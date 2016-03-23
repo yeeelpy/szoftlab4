@@ -39,6 +39,7 @@ public class Game implements Runnable{
 	
 	public static void move(){
 		Position nextPosition = null;
+		player.setLastPosition(player.getPosition());
 		if(player.getDirection() == Direction.UP){
 			nextPosition = new Position(player.getPosition().getX(),player.getPosition().getY()-1);
 			
@@ -52,7 +53,8 @@ public class Game implements Runnable{
 			nextPosition = new Position(player.getPosition().getX()+1,player.getPosition().getY());
 			
 		}
-		if(!Panel.getPlayingField().getMapCellType(nextPosition).equals(CellType.WALL) && player.getDirection() != Direction.STAY){
+		if(!Panel.getPlayingField().getMapCellType(nextPosition).equals(CellType.WALL) && player.getDirection() != Direction.STAY
+		   && !Panel.getPlayingField().getMapCellType(nextPosition).equals(CellType.DOOR)){
 			player.setPosition(nextPosition);
 		}
 	}
@@ -89,6 +91,8 @@ public class Game implements Runnable{
 	private void checkPlate(){
 		if(Panel.getPlayingField().isPlate(player.getPosition())){
 			Panel.getPlayingField().getDoorManager().openDoor(player.getPosition());
+		}else if(Panel.getPlayingField().isPlate(player.getLastPosition())){
+			Panel.getPlayingField().getDoorManager().closeDoor(player.getLastPosition());
 		}
 	}
 	

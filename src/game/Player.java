@@ -5,18 +5,21 @@ import java.awt.event.KeyListener;
 
 public class Player implements KeyListener{
 	
-	private Position position;
+	private Position position, lastPosition;
 	private int direction, lastDirection;
 	private Portal bluePortal, orangePortal;
 	private int inventory;
+	private boolean boxAvailable;
 	
 	Player(Position c){
 		position = new Position(c.getX(),c.getY());
+		setLastPosition(new Position());
 		direction = Direction.STAY;
 		setLastDirection(Direction.LEFT);
 		bluePortal = new Portal();
 		orangePortal = new Portal();
 		inventory = 0;
+		setBoxAvailable(false);
 
 	}
 	
@@ -45,6 +48,7 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -81,12 +85,37 @@ public class Player implements KeyListener{
 			}
 			orangePortal.openPortal(false);
 			break;
+		case KeyEvent.VK_E:
+			if(Panel.getPlayingField().getMapCellType(position) == CellType.BOX){
+				if(!boxAvailable){
+					Panel.getPlayingField().setMapCellType(position, CellType.PATH);
+					boxAvailable = true;
+				}
+			}else if(Panel.getPlayingField().getMapCellType(position) == CellType.PRESSUREDPLATE){
+				if(!boxAvailable){
+					Panel.getPlayingField().setMapCellType(position, CellType.PLATE);
+					boxAvailable = true;
+				}
+			}else{
+				if(boxAvailable){
+					if(Panel.getPlayingField().getMapCellType(position) == CellType.PLATE){
+						Panel.getPlayingField().setMapCellType(position, CellType.PRESSUREDPLATE);
+						boxAvailable = false;
+					}else{
+						Panel.getPlayingField().setMapCellType(position, CellType.BOX);
+						boxAvailable = false;
+					}
+					
+				}
+			}
+			
 		}
+			
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() != KeyEvent.VK_B && e.getKeyCode() != KeyEvent.VK_N){
+		if(e.getKeyCode() != KeyEvent.VK_B && e.getKeyCode() != KeyEvent.VK_N && e.getKeyCode() != KeyEvent.VK_E){
 			setLastDirection(direction);
 			direction = Direction.STAY;
 		}
@@ -107,5 +136,21 @@ public class Player implements KeyListener{
 
 	public void incInventory() {
 		this.inventory+=1;
+	}
+
+	public boolean isBoxAvailable() {
+		return boxAvailable;
+	}
+
+	public void setBoxAvailable(boolean boxAvailable) {
+		this.boxAvailable = boxAvailable;
+	}
+
+	public Position getLastPosition() {
+		return lastPosition;
+	}
+
+	public void setLastPosition(Position lastPosition) {
+		this.lastPosition = lastPosition;
 	}
 }

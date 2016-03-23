@@ -6,7 +6,8 @@ public class Map {
 	public static final int LIMIT = 11;
 	public static final int ABYSSCOUNT = 1;
 	public static final int ZPMCOUNT = 1;
-	public static final int DOORCOUNT = 3;
+	public static final int DOORCOUNT = 6;
+	public static final int BOXCOUNT = 4;
 
 	private Cell[][] map;
 	private DoorManager doorManager;
@@ -18,6 +19,7 @@ public class Map {
 		generateLab(map, 1, 1);
 		placeAbyss();
 		placeZPM();
+		placeBox();
 		placeDoorPlatePairs();
 	}
 	
@@ -101,7 +103,7 @@ public class Map {
 		while(count != ABYSSCOUNT){
 			int r1 = 1 + (int)(Math.random() * (LIMIT-1));
 			int r2 = 1 + (int)(Math.random() * (LIMIT-1));
-			if(map[r1][r2].getType().equals(CellType.PATH) && !(r1 == 1 && r2 == 1) && !isEdge(r1,r2)){
+			if(map[r1][r2].getType().equals(CellType.PATH) && !(r1 == 1 && r2 == 1) && !isEdge(r1,r2) && !map[r1][r2].getType().equals(CellType.ABYSS)){
 				map[r1][r2].setType(CellType.ABYSS);
 				count+=1;
 			}
@@ -121,13 +123,28 @@ public class Map {
 		
 	}
 	
+	
+	
 	private void placeZPM(){
 		int count = 0;
 		while(count != ZPMCOUNT){
 			int r1 = 1 + (int)(Math.random() * (LIMIT-1));
 			int r2 = 1 + (int)(Math.random() * (LIMIT-1));
-			if(map[r1][r2].getType().equals(CellType.PATH) && !(r1 == 1 && r2 == 1) && !map[r1][r2].getType().equals(CellType.ABYSS)){
+			if(map[r1][r2].getType().equals(CellType.PATH) && !(r1 == 1 && r2 == 1) && !map[r1][r2].getType().equals(CellType.ABYSS) && !map[r1][r2].getType().equals(CellType.ZPM)){
 				map[r1][r2].setType(CellType.ZPM);
+				count+=1;
+			}
+		}
+	}
+	
+	private void placeBox(){
+		int count = 0;
+		while(count != BOXCOUNT){
+			int r1 = 1 + (int)(Math.random() * (LIMIT-1));
+			int r2 = 1 + (int)(Math.random() * (LIMIT-1));
+			if(map[r1][r2].getType().equals(CellType.PATH) && !(r1 == 1 && r2 == 1) && !map[r1][r2].getType().equals(CellType.ABYSS)
+			   && !map[r1][r2].getType().equals(CellType.ZPM) && !map[r1][r2].getType().equals(CellType.BOX) && !isEdge(r1,r2)){
+				map[r1][r2].setType(CellType.BOX);
 				count+=1;
 			}
 		}
@@ -147,10 +164,10 @@ public class Map {
 			if(map[r1][r2].getType().equals(CellType.PATH) &&
 			   map[r3][r4].getType().equals(CellType.PATH) &&
 			   !(r1 == 1 && r2 == 1 && r3 == 1 && r4 == 1) && 
-			   !plate.equals(door)){
+			   !plate.equals(door) && !isEdge(r3,r4)){
 				
 				map[r1][r2].setType(CellType.PLATE);
-				map[r3][r4].setType(CellType.CLOSED_DOOR);
+				map[r3][r4].setType(CellType.DOOR);
 				
 				System.out.println(door.hashCode());
 				
